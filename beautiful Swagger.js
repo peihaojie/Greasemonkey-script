@@ -1,7 +1,8 @@
 // ==UserScript==
-// @name          beautiful Swagger
+// @name          Easy Swagger
 // @namespace     https://github.com/peihaojie/Greasemonkey-script
-// @description   让Swagger变得更加好用
+// @description   注意：此脚本为自用包，请搜索 swagger-toolkit 安装原作者的脚本
+// @description   注意: 需要增加适配网站，请手动修改 @include
 // @include      https://test-dms.skyallhere.com/api/swagger-ui/index.html
 // @version       1.0
 // @icon          https://raw.githubusercontent.com/peihaojie/Greasemonkey-script/master/icon.png
@@ -9,70 +10,70 @@
 
 class Sheets {
   static sheets = `
-            body {
-                --row-width: 13vw;
-                --row-min-width: 245px;
-                --row-title-font-size: 14px;
-                --body-wrapper-width: 80vw;
-                --body-wrapper-margin-right: 3vw;
-                --body-wrapper-min-width: 800px;
-                --body-btn-group-width: 20px;
-            }
+    body {
+      --row-width: 13vw;
+      --row-min-width: 245px;
+      --row-title-font-size: 14px;
+      --body-wrapper-width: 80vw;
+      --body-wrapper-margin-right: 3vw;
+      --body-wrapper-min-width: 800px;
+      --body-btn-group-width: 20px;
+    }
 
-            /* 应用于 Copy input */
-            .toolkit-hidden { width: 1; height: 1; }
+    /* 应用于 Copy input */
+    .toolkit-hidden { width: 1; height: 1; }
 
-            /* 接口信息部分样式 */
-            #swagger-ui .opblock .toolkit-path-btn-group { margin-left: 10px; display: none; }
-            #swagger-ui .opblock:hover .toolkit-path-btn-group { display: block; }
-            #swagger-ui .opblock .toolkit-path-btn-group a { text-decoration: none; }
+    /* 接口信息部分样式 */
+    #swagger-ui .opblock .toolkit-path-btn-group { margin-left: 10px; display: none; }
+    #swagger-ui .opblock:hover .toolkit-path-btn-group { display: block; }
+    #swagger-ui .opblock .toolkit-path-btn-group a { text-decoration: none; }
 
-            /* 页面内容主体布局 */
-            #swagger-ui div.topbar { display: flex; justify-content: flex-end; }
-            #swagger-ui div.topbar .wrapper { margin: 0; width: var(--body-wrapper-width); min-width: var(--body-wrapper-min-width); margin-right: var(--body-wrapper-margin-right) }
-            #swagger-ui div.swagger-ui { display: flex; justify-content: flex-end; }
-            #swagger-ui div.swagger-ui .wrapper { margin: 0; width: var(--body-wrapper-width); min-width: var(--body-wrapper-min-width); margin-right: var(--body-wrapper-margin-right) }
+    /* 页面内容主体布局 */
+    #swagger-ui div.topbar { display: flex; justify-content: flex-end; }
+    #swagger-ui div.topbar .wrapper { margin: 0; width: var(--body-wrapper-width); min-width: var(--body-wrapper-min-width); margin-right: var(--body-wrapper-margin-right) }
+    #swagger-ui div.swagger-ui { display: flex; justify-content: flex-end; }
+    #swagger-ui div.swagger-ui .wrapper { margin: 0; width: var(--body-wrapper-width); min-width: var(--body-wrapper-min-width); margin-right: var(--body-wrapper-margin-right) }
 
-            /* sidebar part */
-            #swagger-toolkit-sidebar {
-                width: var(--row-width);
-                min-width: var(--row-min-width);
-                display: flex;
-                position: fixed;
-                top: 0;
-                left: 0;
-                height: 100vh;
-                flex-direction: column;
-                justify-content: space-between;
-                background-color: #FAFAFA;
-                border-right: 1px solid #c4d6d6;
-            }
-            #swagger-toolkit-sidebar .list { width: 100%; }
-            #swagger-toolkit-sidebar .list > header { font-size: 18px; background-color: #999; }
-            #swagger-toolkit-sidebar .list > header > .title { color: #FFF; text-align: center; font-weight: 200; }
-            #swagger-toolkit-sidebar .row { display: flex; padding-bottom: 5px; width: 100%; cursor: pointer; text-decoration: none; }
-            #swagger-toolkit-sidebar .row.method-DELETE { background-color: rgba(249,62,62,.1); }
-            #swagger-toolkit-sidebar .row.method-DELETE:hover { background-color: rgba(249,62,62,.5); }
-            #swagger-toolkit-sidebar .row.method-GET { background-color: rgba(97,175,254,.1); }
-            #swagger-toolkit-sidebar .row.method-GET:hover { background-color: rgba(97,175,254,.5); }
-            #swagger-toolkit-sidebar .row.method-POST { background-color: rgba(73,204,144,.1); }
-            #swagger-toolkit-sidebar .row.method-POST:hover { background-color: rgba(73,204,144,.5); }
-            #swagger-toolkit-sidebar .row.method-PUT { background-color: rgba(252,161,48,.1); }
-            #swagger-toolkit-sidebar .row.method-PUT:hover { background-color: rgba(252,161,48,.5); }
-            #swagger-toolkit-sidebar .row.method-PATCH { background-color: rgba(80,227,194,.1); }
-            #swagger-toolkit-sidebar .row.method-PATCH:hover { background-color: rgba(80,227,194,.5); }
+    /* sidebar part */
+    #swagger-toolkit-sidebar {
+      width: var(--row-width);
+      min-width: var(--row-min-width);
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: #FAFAFA;
+      border-right: 1px solid #c4d6d6;
+    }
+    #swagger-toolkit-sidebar .list { width: 100%; }
+    #swagger-toolkit-sidebar .list > header { font-size: 18px; background-color: #999; }
+    #swagger-toolkit-sidebar .list > header > .title { color: #FFF; text-align: center; font-weight: 200; }
+    #swagger-toolkit-sidebar .row { display: flex; padding-bottom: 5px; width: 100%; cursor: pointer; text-decoration: none; }
+    #swagger-toolkit-sidebar .row.method-DELETE { background-color: rgba(249,62,62,.1); }
+    #swagger-toolkit-sidebar .row.method-DELETE:hover { background-color: rgba(249,62,62,.5); }
+    #swagger-toolkit-sidebar .row.method-GET { background-color: rgba(97,175,254,.1); }
+    #swagger-toolkit-sidebar .row.method-GET:hover { background-color: rgba(97,175,254,.5); }
+    #swagger-toolkit-sidebar .row.method-POST { background-color: rgba(73,204,144,.1); }
+    #swagger-toolkit-sidebar .row.method-POST:hover { background-color: rgba(73,204,144,.5); }
+    #swagger-toolkit-sidebar .row.method-PUT { background-color: rgba(252,161,48,.1); }
+    #swagger-toolkit-sidebar .row.method-PUT:hover { background-color: rgba(252,161,48,.5); }
+    #swagger-toolkit-sidebar .row.method-PATCH { background-color: rgba(80,227,194,.1); }
+    #swagger-toolkit-sidebar .row.method-PATCH:hover { background-color: rgba(80,227,194,.5); }
 
-            #swagger-toolkit-sidebar .row .description { color: #333; font-size: 14px; width: calc(var(--row-width) - var(--body-btn-group-width)); min-width: calc(var(--row-min-width) - var(--body-btn-group-width)); }
-            #swagger-toolkit-sidebar .row .method { display: flex; line-height: 45px; min-width: 64px; }
-            #swagger-toolkit-sidebar .row .path > a { color: #409EFF; }
+    #swagger-toolkit-sidebar .row .description { color: #333; font-size: 14px; width: calc(var(--row-width) - var(--body-btn-group-width)); min-width: calc(var(--row-min-width) - var(--body-btn-group-width)); }
+    #swagger-toolkit-sidebar .row .method { display: flex; line-height: 45px; min-width: 64px; }
+    #swagger-toolkit-sidebar .row .path > a { color: #409EFF; }
 
-            #swagger-toolkit-sidebar .row .btn-group { font-size: 12px; }
-            #swagger-toolkit-sidebar .row .btn-group > a { text-decoration: none; display: block; }
-            #swagger-toolkit-sidebar .row .btn-group > a:hover { font-size: 14px; }
+    #swagger-toolkit-sidebar .row .btn-group { font-size: 12px; }
+    #swagger-toolkit-sidebar .row .btn-group > a { text-decoration: none; display: block; }
+    #swagger-toolkit-sidebar .row .btn-group > a:hover { font-size: 14px; }
 
-            /* helper */
-            .tool-text-size-fixed { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        `;
+    /* helper */
+    .tool-text-size-fixed { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  `;
   static inject() {
     const sheet = document.createTextNode(Sheets.sheets);
     const el = document.createElement("style");
@@ -253,8 +254,9 @@ class SideBar {
   }
   addListeners() {
     window.addEventListener("hashchange", () => {
-      const _path = location.hash.length > 0 ? location.hash.substr(1) : "";
+      let _path = location.hash.length > 0 ? location.hash.substr(1) : "";
       if (!_path) return;
+      _path = (window.decodeURI && window.decodeURI(_path)) || _path;
       const row =
         document.getElementById(_path) ||
         (document.querySelector(`a[href="#${_path}"]`) &&
@@ -383,39 +385,7 @@ window.onload = setTimeout(() => {
         if (hash) location.hash = hash;
         return;
       }
-      // 点击接口中的 Model 时同步展开下方数据结构
-      const modelLinkDom = evt.target.closest("ul.tab");
-      if (modelLinkDom && evt.target.innerText.trim() === "Model") {
-        setTimeout(() => {
-          const icons = modelLinkDom.nextElementSibling.querySelectorAll(
-            ".model-toggle.collapsed"
-          );
-          if (icons.length) icons[icons.length - 1].click();
-        }, 300);
-        return;
-      }
     });
-
-    const observeHash = (evt) => {
-      const linkedDom = document.getElementById(
-        location.hash.length > 0 ? location.hash.substr(1) : ""
-      );
-      if (linkedDom) {
-        const isOpen = linkedDom.classList.contains("is-open");
-        linkedDom.scrollIntoView();
-        if (!isOpen) linkedDom.querySelector(".opblock-summary").click();
-        console.log(
-          "scroll into view: ",
-          linkedDom,
-          linkedDom.querySelector(".opblock-summary")
-        );
-      }
-    };
-
-    if (location.hash) {
-      observeHash();
-      window.addEventListener("hashchange", observeHash);
-    }
 
     window.$$_SideBar = new SideBar();
     window.$$_SideBar
