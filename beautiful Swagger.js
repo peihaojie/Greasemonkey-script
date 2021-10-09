@@ -7,4 +7,4 @@
 // @icon          https://github.com/peihaojie/Greasemonkey-script/icon.png
 // ==/UserScript==
 
-console.log(GM.info)
+console.log(GM.info);
